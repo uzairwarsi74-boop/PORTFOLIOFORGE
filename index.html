@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PortfolioForge — Build Your Dream Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0a0a0f;
+    --bg2: #111118;
+    --bg3: #1a1a24;
+    --accent: #7c3aed;
+    --accent2: #a855f7;
+    --accent3: #06b6d4;
+    --text: #f0eeff;
+    --text2: #a09cbd;
+    --text3: #6b6880;
+    --border: rgba(124,58,237,0.25);
+    --card: rgba(26,26,36,0.8);
+    --glow: rgba(124,58,237,0.15);
+  }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; overflow-x: hidden; }
+
+  /* NAVBAR */
+  nav { display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 4rem; position: fixed; top: 0; width: 100%; z-index: 100; backdrop-filter: blur(20px); background: rgba(10,10,15,0.7); border-bottom: 1px solid rgba(255,255,255,0.04); }
+  .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem; background: linear-gradient(135deg, #a855f7, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-decoration: none; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { color: var(--text2); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--text); }
+  .nav-cta { background: var(--accent); color: #fff; padding: 0.55rem 1.4rem; border-radius: 8px; text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: all 0.2s; }
+  .nav-cta:hover { background: var(--accent2); transform: translateY(-1px); }
+
+  /* HERO */
+  .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 6rem 2rem 4rem; position: relative; overflow: hidden; }
+  .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 50% 30%, rgba(124,58,237,0.12) 0%, transparent 70%), radial-gradient(ellipse 50% 40% at 80% 70%, rgba(6,182,212,0.08) 0%, transparent 60%); pointer-events: none; }
+  .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(124,58,237,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(124,58,237,0.06) 1px, transparent 1px); background-size: 60px 60px; pointer-events: none; mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%); }
+  .badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(124,58,237,0.15); border: 1px solid rgba(124,58,237,0.3); color: var(--accent2); padding: 0.4rem 1rem; border-radius: 999px; font-size: 0.8rem; font-weight: 500; margin-bottom: 1.5rem; }
+  .badge-dot { width: 6px; height: 6px; background: var(--accent2); border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.3)} }
+  h1 { font-family: 'Syne', sans-serif; font-size: clamp(2.8rem, 7vw, 5.5rem); font-weight: 800; line-height: 1.05; max-width: 860px; margin-bottom: 1.5rem; }
+  h1 span { background: linear-gradient(135deg, #a855f7 0%, #06b6d4 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .hero-sub { font-size: 1.15rem; color: var(--text2); max-width: 560px; line-height: 1.7; margin-bottom: 2.5rem; }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+  .btn-primary { background: linear-gradient(135deg, var(--accent), #9333ea); color: #fff; padding: 0.85rem 2rem; border-radius: 10px; text-decoration: none; font-size: 1rem; font-weight: 600; font-family: 'Syne', sans-serif; transition: all 0.25s; box-shadow: 0 0 30px rgba(124,58,237,0.3); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 50px rgba(124,58,237,0.5); }
+  .btn-ghost { background: transparent; color: var(--text2); padding: 0.85rem 2rem; border-radius: 10px; text-decoration: none; font-size: 1rem; font-weight: 500; transition: all 0.25s; border: 1px solid rgba(255,255,255,0.1); }
+  .btn-ghost:hover { border-color: rgba(124,58,237,0.5); color: var(--text); }
+  .hero-stats { display: flex; gap: 3rem; margin-top: 4rem; padding-top: 3rem; border-top: 1px solid rgba(255,255,255,0.06); }
+  .stat { text-align: center; }
+  .stat-num { font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800; background: linear-gradient(135deg, #a855f7, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .stat-label { font-size: 0.8rem; color: var(--text3); margin-top: 0.2rem; }
+
+  /* FEATURES */
+  section { padding: 5rem 4rem; }
+  .section-label { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent2); margin-bottom: 0.75rem; }
+  .section-title { font-family: 'Syne', sans-serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; margin-bottom: 1rem; }
+  .section-sub { color: var(--text2); font-size: 1rem; max-width: 520px; line-height: 1.7; margin-bottom: 3rem; }
+  .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+  .feature-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1.75rem; backdrop-filter: blur(10px); transition: all 0.3s; position: relative; overflow: hidden; }
+  .feature-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(124,58,237,0.5), transparent); }
+  .feature-card:hover { border-color: rgba(124,58,237,0.5); transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+  .feature-icon { width: 48px; height: 48px; background: rgba(124,58,237,0.15); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin-bottom: 1rem; }
+  .feature-card h3 { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .feature-card p { color: var(--text2); font-size: 0.9rem; line-height: 1.6; }
+
+  /* TEMPLATES PREVIEW */
+  .templates-section { background: var(--bg2); }
+  .templates-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
+  .template-card { border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.06); transition: all 0.3s; cursor: pointer; }
+  .template-card:hover { transform: scale(1.02); border-color: rgba(124,58,237,0.4); }
+  .template-thumb { height: 180px; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .t1 { background: linear-gradient(135deg, #0f0f23, #1a0533, #0d1544); }
+  .t2 { background: linear-gradient(135deg, #001a0d, #003322, #001a0d); }
+  .t3 { background: linear-gradient(135deg, #1a0a00, #2d1200, #1a0800); }
+  .t4 { background: linear-gradient(135deg, #0a0a0a, #1a1a1a, #0d0d0d); }
+  .template-preview-inner { font-family: 'Syne', sans-serif; text-align: center; padding: 1rem; }
+  .template-info { padding: 1rem; background: var(--bg3); }
+  .template-info h4 { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 600; margin-bottom: 0.25rem; }
+  .template-info p { font-size: 0.8rem; color: var(--text3); }
+  .template-tag { display: inline-block; background: rgba(124,58,237,0.15); color: var(--accent2); font-size: 0.7rem; padding: 0.2rem 0.6rem; border-radius: 999px; margin-top: 0.4rem; }
+
+  /* HOW IT WORKS */
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+  .step { text-align: center; padding: 2rem 1.5rem; }
+  .step-num { font-family: 'Syne', sans-serif; font-size: 3rem; font-weight: 800; background: linear-gradient(135deg, rgba(168,85,247,0.3), rgba(6,182,212,0.3)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.75rem; line-height: 1; }
+  .step h3 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .step p { color: var(--text2); font-size: 0.88rem; line-height: 1.6; }
+
+  /* CTA SECTION */
+  .cta-section { text-align: center; padding: 6rem 2rem; background: radial-gradient(ellipse 70% 50% at 50% 50%, rgba(124,58,237,0.12) 0%, transparent 70%); }
+  .cta-section h2 { font-family: 'Syne', sans-serif; font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 800; margin-bottom: 1rem; }
+  .cta-section p { color: var(--text2); font-size: 1.05rem; max-width: 500px; margin: 0 auto 2.5rem; line-height: 1.7; }
+
+  /* FOOTER */
+  footer { border-top: 1px solid rgba(255,255,255,0.05); padding: 2.5rem 4rem; display: flex; justify-content: space-between; align-items: center; color: var(--text3); font-size: 0.85rem; }
+  .footer-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.1rem; background: linear-gradient(135deg, #a855f7, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 3rem 1.5rem; }
+    .hero-stats { gap: 1.5rem; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+
+  /* ANIMATIONS */
+  .fade-up { opacity: 0; transform: translateY(30px); animation: fadeUp 0.7s forwards; }
+  .fade-up:nth-child(1) { animation-delay: 0.1s; }
+  .fade-up:nth-child(2) { animation-delay: 0.2s; }
+  .fade-up:nth-child(3) { animation-delay: 0.3s; }
+  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">PortfolioForge</a>
+  <ul class="nav-links">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#templates">Templates</a></li>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="builder.html">Builder</a></li>
+  </ul>
+  <a class="nav-cta" href="builder.html">Start Building Free</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="badge fade-up"><span class="badge-dot"></span> 100% Free · No Account Required</div>
+  <h1 class="fade-up">Build a Portfolio That <span>Actually Gets You Hired</span></h1>
+  <p class="hero-sub fade-up">Create stunning, fully animated portfolio websites in minutes. Pick a theme, add your work, customize everything — then deploy free to GitHub Pages.</p>
+  <div class="hero-actions fade-up">
+    <a href="builder.html" class="btn-primary">Launch Builder →</a>
+    <a href="#templates" class="btn-ghost">See Templates</a>
+  </div>
+  <div class="hero-stats fade-up">
+    <div class="stat"><div class="stat-num">15+</div><div class="stat-label">Animations</div></div>
+    <div class="stat"><div class="stat-num">8+</div><div class="stat-label">Themes</div></div>
+    <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Free to Export</div></div>
+    <div class="stat"><div class="stat-num">∞</div><div class="stat-label">Customizations</div></div>
+  </div>
+</section>
+
+<section id="features">
+  <p class="section-label">Everything You Need</p>
+  <h2 class="section-title">Packed With Power Features</h2>
+  <p class="section-sub">From beginner to expert — build portfolios that stand out with zero coding required.</p>
+  <div class="features-grid">
+    <div class="feature-card"><div class="feature-icon">🎨</div><h3>Visual Theme Editor</h3><p>Choose from 8+ stunning dark and light themes. Customize colors, fonts, and spacing with live preview.</p></div>
+    <div class="feature-card"><div class="feature-icon">✨</div><h3>15+ Animations</h3><p>Typewriter, fade-in, slide, bounce, glitch, parallax and more. Apply different animations to each section.</p></div>
+    <div class="feature-card"><div class="feature-icon">🖼️</div><h3>Image Uploads</h3><p>Upload project screenshots, business photos, profile pictures. Drag and drop directly into your portfolio.</p></div>
+    <div class="feature-card"><div class="feature-icon">📐</div><h3>Flexible Page Sections</h3><p>Hero, About, Projects, Skills, Testimonials, Contact — add, remove, and reorder sections freely.</p></div>
+    <div class="feature-card"><div class="feature-icon">🔤</div><h3>Custom Typography</h3><p>Pick from 20+ Google Fonts. Mix display and body fonts for your unique personality and brand.</p></div>
+    <div class="feature-card"><div class="feature-icon">📱</div><h3>Mobile Responsive</h3><p>Every portfolio auto-adapts to phones, tablets, and desktops. Always looks perfect everywhere.</p></div>
+    <div class="feature-card"><div class="feature-icon">💾</div><h3>Export to HTML</h3><p>Download a complete single-file HTML portfolio. Upload to GitHub Pages and go live in seconds.</p></div>
+    <div class="feature-card"><div class="feature-icon">🔗</div><h3>Live Preview</h3><p>See every change in real-time. What you build is exactly what your visitors will see.</p></div>
+    <div class="feature-card"><div class="feature-icon">👥</div><h3>Multiple Portfolios</h3><p>Each user builds their own. Portfolios are saved locally so your data stays private and yours.</p></div>
+  </div>
+</section>
+
+<section id="templates" class="templates-section">
+  <p class="section-label">Visual Styles</p>
+  <h2 class="section-title">Choose Your Aesthetic</h2>
+  <p class="section-sub">Start from a beautiful base theme and make it completely your own.</p>
+  <div class="templates-grid">
+    <div class="template-card" onclick="window.location.href='builder.html?theme=cosmic'">
+      <div class="template-thumb t1">
+        <div class="template-preview-inner">
+          <div style="color:#a855f7;font-size:0.7rem;letter-spacing:0.2em">FULL-STACK DEV</div>
+          <div style="color:#fff;font-size:1.2rem;font-weight:800;margin:0.3rem 0">Alex Chen</div>
+          <div style="width:40px;height:2px;background:linear-gradient(90deg,#a855f7,#06b6d4);margin:0 auto"></div>
+        </div>
+      </div>
+      <div class="template-info"><h4>Cosmic Dark</h4><p>Deep space vibes for tech & dev</p><span class="template-tag">Dark</span></div>
+    </div>
+    <div class="template-card" onclick="window.location.href='builder.html?theme=forest'">
+      <div class="template-thumb t2">
+        <div class="template-preview-inner">
+          <div style="color:#4ade80;font-size:0.7rem;letter-spacing:0.2em">UX DESIGNER</div>
+          <div style="color:#fff;font-size:1.2rem;font-weight:800;margin:0.3rem 0">Sara Ahmed</div>
+          <div style="width:40px;height:2px;background:linear-gradient(90deg,#4ade80,#059669);margin:0 auto"></div>
+        </div>
+      </div>
+      <div class="template-info"><h4>Emerald Forest</h4><p>Natural & calm for creatives</p><span class="template-tag">Dark</span></div>
+    </div>
+    <div class="template-card" onclick="window.location.href='builder.html?theme=ember'">
+      <div class="template-thumb t3">
+        <div class="template-preview-inner">
+          <div style="color:#fb923c;font-size:0.7rem;letter-spacing:0.2em">PHOTOGRAPHER</div>
+          <div style="color:#fff;font-size:1.2rem;font-weight:800;margin:0.3rem 0">Marco Rossi</div>
+          <div style="width:40px;height:2px;background:linear-gradient(90deg,#fb923c,#ef4444);margin:0 auto"></div>
+        </div>
+      </div>
+      <div class="template-info"><h4>Ember Glow</h4><p>Warm & bold for artists</p><span class="template-tag">Dark</span></div>
+    </div>
+    <div class="template-card" onclick="window.location.href='builder.html?theme=minimal'">
+      <div class="template-thumb t4">
+        <div class="template-preview-inner">
+          <div style="color:#9ca3af;font-size:0.7rem;letter-spacing:0.2em">CONSULTANT</div>
+          <div style="color:#fff;font-size:1.2rem;font-weight:800;margin:0.3rem 0">Jamie Park</div>
+          <div style="width:40px;height:2px;background:#fff;margin:0 auto"></div>
+        </div>
+      </div>
+      <div class="template-info"><h4>Noir Minimal</h4><p>Clean & sophisticated</p><span class="template-tag">Dark</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <p class="section-label">Simple Process</p>
+  <h2 class="section-title">Launch in 4 Steps</h2>
+  <p class="section-sub">From blank canvas to live website — faster than you think.</p>
+  <div class="steps">
+    <div class="step"><div class="step-num">01</div><h3>Pick Your Theme</h3><p>Choose from stunning pre-built themes or start blank. Select fonts, colors, and animation style.</p></div>
+    <div class="step"><div class="step-num">02</div><h3>Add Your Content</h3><p>Fill in your name, bio, skills, and projects. Upload images of your work and business.</p></div>
+    <div class="step"><div class="step-num">03</div><h3>Arrange Your Sections</h3><p>Drag sections to reorder. Add or remove Hero, About, Projects, Skills, and Contact blocks.</p></div>
+    <div class="step"><div class="step-num">04</div><h3>Export & Go Live</h3><p>Download your HTML file and push to GitHub. Enable GitHub Pages — your portfolio is live!</p></div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <h2>Ready to Stand Out?</h2>
+  <p>Your portfolio is your first impression. Make it unforgettable — completely free.</p>
+  <a href="builder.html" class="btn-primary">Start Building Now →</a>
+</section>
+
+<footer>
+  <span class="footer-logo">PortfolioForge</span>
+  <span>Free forever · Export to GitHub Pages · No account needed</span>
+</footer>
+
+</body>
+</html>
